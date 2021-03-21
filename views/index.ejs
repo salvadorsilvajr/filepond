@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>filepond</title>
+   <!-- add to document <head> -->
+   <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+   <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+
+   <script>
+      document.addEventListener('DOMContentLoaded', function () {
+         FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginImageResize,
+            FilePondPluginFileEncode
+         );
+         // https://pqina.nl/filepond/docs/patterns/api/filepond-object/#setting-options
+         FilePond.setOptions({
+            stylePanelAspectRatio: 130 / 100,
+            imageResizeTargetWidth: 100,
+            imageResizeTargetHeight: 130,
+         })
+         FilePond.parse(document.body);
+      });
+   </script>
+
+
+</head>
+
+<body>
+   <h1>filepond</h1>
+   <div class="ui pointing menu">
+      <div class="ui container">
+         <a class="active item">
+            Home
+         </a>
+         <a class="item">
+            Messages
+         </a>
+         <a class="item">
+            Friends
+         </a>
+         <div class="right menu">
+            <div class="item">
+               <div class="ui transparent icon input">
+                  <input type="text" placeholder="Search...">
+                  <i class="search link icon"></i>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <br>
+   <div class="ui container">
+      <form action="/add" class='ui form' method="POST">
+         <div class="ui fields two">
+            <div class="field">
+               <label for="name">Name</label>
+               <input type="text" name="name" id=''>
+            </div>
+            <div class="field">
+               <label for="type">Type</label>
+               <select name='type'>
+                  <option value="fantacy">Fantacy</option>
+                  <option value="action">Action</option>
+                  <option value="animation">Animation</option>
+                  <option value="sci-fi">Sci-Fi</option>
+               </select>
+            </div>
+         </div>
+         <div class="ui field ">
+            <label for="img">Image</label>
+            <input type="file" name="img" class="filepond ui image small">
+         </div>
+         <div class="ui field">
+            <button class="ui button green" type="submit">Save</button>
+         </div>
+      </form>
+   </div>
+   <br><br>
+   <div class="ui container">
+      <% if(movie) { %>
+         <div class="ui grid">
+            <% movie.forEach(m=> { %>
+               <div class=" ui cards">
+                  <div class="card">
+                     <div class="image ">
+                        <img src="<%= m.ImagePath %>">
+                     </div>
+                     <div class="content">
+                        <div class="header">
+                           <%= m.name %>
+                        </div>
+                     </div>
+                     <div class="extra content">
+                        <span>
+                           <i class="edit outline icon"></i>
+                           <%= m.type %>
+                        </span>
+                     </div>
+                  </div>
+               </div>
+
+
+               <% }) %>
+         </div>
+         <% } %>
+   </div>
+
+   <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+   <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+   <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+   <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+</body>
+
+</html>
